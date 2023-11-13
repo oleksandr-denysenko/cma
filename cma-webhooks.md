@@ -47,7 +47,7 @@ When the Card Management API triggers a webhook event, it sends a JSON payload t
 
 #### `amount`
 - **Type:** number
-- **Description:** The amount involved in the transaction.
+- **Description:** The amount involved in the transaction, expressed in the account's currency, which is currently EUR.
 
 #### `created`
 - **Type:** long
@@ -55,7 +55,7 @@ When the Card Management API triggers a webhook event, it sends a JSON payload t
 
 #### `currency`
 - **Type:** string
-- **Description:** Currency of the transaction.
+- **Description:** Currency of the transaction, representing the account's currency, ISO 4217 format as EUR.
 
 #### `merchant`
 - **Type:** object
@@ -70,26 +70,42 @@ When the Card Management API triggers a webhook event, it sends a JSON payload t
         - **Description:** Merchant Category Code.
     - `country`
         - **Type:** string
-        - **Description:** Country where the merchant is located.
+        - **Description:** Country where the merchant is located, using ISO 3166-1 alpha-2 country code format.
     - `posTerminalId`
         - **Type:** string
         - **Description:** ID of the Point of Sale terminal used.
 
 #### `transactionAmount`
 - **Type:** number
-- **Description:** Actual transaction amount.
+- **Description:** Actual transaction amount, expressed in the transaction currency.
 
 #### `transactionCurrency`
 - **Type:** string
-- **Description:** Currency used for the transaction.
+- **Description:** Currency used for the transaction, ISO 4217 format as EUR.
 
 #### `transactionType`
 - **Type:** string
-- **Description:** Type of transaction (e.g., "POS").
+- **Description:** Type of transaction. TThis field represents various transaction types, including:
+    - `POS`: Point of Sale transaction.
+    - `ATM`: ATM transaction.
+    - `BALANCE_INQUIRY`: Balance inquiry operation.
+    - `REFUND`: Transaction refund.
+    - `POS_VERIFICATION_ONLY`: POS verification without transaction.
+
+  The transaction type is determined based on these predefined codes, offering a standardized way to classify different transaction activities.
 
 #### `authorizationType`
 - **Type:** string
-- **Description:** Type of authorization for the transaction (e.g., "NormalAuthorize").
+- **Description:** Indicates the type of authorization for the transaction. It represents various authorization types, such as:
+    - `NormalAuthorize`: Standard authorization.
+    - `PreAuthorize`: Pre-authorization hold.
+    - `FinalAuthorize`: Finalization of a pre-authorization.
+    - `Incremental`: Incremental authorization.
+    - `Recurring`: Recurring transaction authorization.
+    - `AuthorizeAdvice`: Advisory for authorization.
+    - `Refund`: Authorization for a refund.
+    - `Reversal400`: Reversal of a previous authorization (code 400).
+    - `Reversal420`: Reversal of a previous authorization (code 420).
 
 
 Expected Response Format:
