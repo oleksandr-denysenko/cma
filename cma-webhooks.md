@@ -5,7 +5,7 @@ Webhooks in the Card Management API play a critical role in the external authori
 
 ## Setting Up Webhooks
 To effectively use webhooks with the Card Management API, follow these steps:
-1. **Configure the Webhook URL**: Configure the Webhook URL: Utilize the endpoint /cma/v1/webhooks to specify the URL where you want the webhook notifications to be delivered.
+1. **Configure the Webhook URL**: Configure the Webhook URL: Utilize the endpoint **/cma/v1/webhooks** to specify the URL where you want the webhook notifications to be delivered.
 2. **Receive Notifications**: Once configured, the API will send HTTP POST requests with JSON payloads to your specified URL whenever the subscribed events occur.
 
 ## Webhook Payload Structure
@@ -34,6 +34,63 @@ When the Card Management API triggers a webhook event, it sends a JSON payload t
   "authorizationType": "string"
 } 
 ```
+
+#### `id`
+- **Type:** string
+- **Description:** Unique identifier for the transaction or event.
+
+#### `card`
+- **Type:** object
+    - `serial`
+        - **Type:** string
+        - **Description:** Serial number of the card involved in the transaction.
+
+#### `amount`
+- **Type:** number
+- **Description:** The amount involved in the transaction.
+
+#### `created`
+- **Type:** long
+- **Description:** Timestamp of when the transaction was created, in milliseconds since Unix epoch.
+
+#### `currency`
+- **Type:** string
+- **Description:** Currency of the transaction.
+
+#### `merchant`
+- **Type:** object
+    - `id`
+        - **Type:** string
+        - **Description:** Unique identifier for the merchant.
+    - `name`
+        - **Type:** string
+        - **Description:** Name of the merchant, including location details.
+    - `mccCode`
+        - **Type:** string
+        - **Description:** Merchant Category Code.
+    - `country`
+        - **Type:** string
+        - **Description:** Country where the merchant is located.
+    - `posTerminalId`
+        - **Type:** string
+        - **Description:** ID of the Point of Sale terminal used.
+
+#### `transactionAmount`
+- **Type:** number
+- **Description:** Actual transaction amount.
+
+#### `transactionCurrency`
+- **Type:** string
+- **Description:** Currency used for the transaction.
+
+#### `transactionType`
+- **Type:** string
+- **Description:** Type of transaction (e.g., "POS").
+
+#### `authorizationType`
+- **Type:** string
+- **Description:** Type of authorization for the transaction (e.g., "NormalAuthorize").
+
 
 Expected Response Format:
 ```json
