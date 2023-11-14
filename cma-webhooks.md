@@ -108,7 +108,7 @@ When the Card Management API triggers a webhook event, it sends a JSON payload t
     - `Reversal420`: Reversal of a previous authorization (code 420).
 
 
-Expected Response Format:
+**Expected Response Format**:
 ```json
 {
   "status": "APPROVE"
