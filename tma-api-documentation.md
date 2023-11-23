@@ -394,7 +394,6 @@ This API enables clients to manage and track their transfers and transaction his
 - **Type:** array of objects
 - **Description:** Contains the field definitions for payer data.
 
-  ######
   - `name`
     - **Type:** string
     - **Description:** Name of the field.
