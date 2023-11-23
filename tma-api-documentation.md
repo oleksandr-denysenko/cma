@@ -77,15 +77,12 @@ This API enables clients to manage and track their transfers and transaction his
 - **Type:** object
 - **Description:** Detailed information about the transfer.
     - `id`: Unique identifier for the transfer.
-    - `type`: Type of the transfer, such as "Self transfer".
+    - `type`: Type of the transfer: Internal transfer, Self transfer, Card transfer. 
     - `createdAt`: Timestamp of when the transfer was created.
     - `updatedAt`: Timestamp of the last update to the transfer.
     - `status`: Status of the transfer, such as "processed".
-      - For IN (incoming) transactions:
-        - `Pending` -> `Processed`, `Reverted`, `Declined`
-      - For OUT (outgoing) transactions:
-        - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
-        - `Limited` -> `Rejected`
+       - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
+       - `Limited` -> `Rejected`
     - `direction`: Direction of the transfer, such as "IN" or "OUT".
     - `amount`: Amount of the transfer.
     - `commission`: Commission amount for the transfer.
@@ -163,7 +160,7 @@ This API enables clients to manage and track their transfers and transaction his
       "amount": "100",
       "payerData": {
         "paymentDetails": "test details",
-        "isBusiness": "false",
+        "isBusiness": "true",
         "beneficiaryName": "EPAM",
         "country": "CY",
         "iban": "CY89375238572039523454",
@@ -208,7 +205,7 @@ This API enables clients to manage and track their transfers and transaction his
         "payerData": {
           "country": "CY",
           "city": "Larnaca",
-          "isBusiness": "false",
+          "isBusiness": "true",
           "beneficiaryName": "EPAM",
           "iban": "CY89375238572039523454",
           "postalCode": "3035",
@@ -232,13 +229,10 @@ This API enables clients to manage and track their transfers and transaction his
 - **Type:** object
 - **Description:** Detailed information about the executed transfer.
     - `id`: Unique identifier for the transfer.
-    - `type`: Type of the transfer ("external").
+    - `type`: Type of the transfer: Incoming SEPA, Outgoing SEPA.
     - `status`: Status of the transfer, such as "completed".
-      - For IN (incoming) transactions:
-        - `Pending` -> `Processed`, `Reverted`, `Declined`
-      - For OUT (outgoing) transactions:
-        - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
-        - `Limited` -> `Rejected`
+      - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
+      - `Limited` -> `Rejected`
     - `createdAt`: Timestamp of when the transfer was created.
     - `direction`: Direction of the transfer (e.g., "outgoing").
     - `amount`: Amount of the transfer.
@@ -536,7 +530,7 @@ This API enables clients to manage and track their transfers and transaction his
         "payerData": {
           "country": "CY",
           "city": "Larnaca",
-          "isBusiness": "false",
+          "isBusiness": "true",
           "beneficiaryName": "EPAM",
           "iban": "CY89375238572039523454",
           "postalCode": "3035",
@@ -594,7 +588,7 @@ This API enables clients to manage and track their transfers and transaction his
       - **Type:** object
       - **Description:** Detailed information about the transfer.
         - `id`: Unique identifier for the transfer.
-        - `type`: Type of the transfer, such as "Self transfer".
+        - `type`: Type of the transfer: Internal transfer, Self transfer, Card transfer, Incoming SEPA, Outgoing SEPA.
         - `createdAt`: Timestamp of when the transfer was created.
         - `updatedAt`: Timestamp of the last update to the transfer.
         - `status`: Status of the transfer, such as "processed".
