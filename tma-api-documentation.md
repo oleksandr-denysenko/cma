@@ -474,10 +474,139 @@ This API enables clients to manage and track their transfers and transaction his
 - **Method**: GET
 - **Description**: Retrieves a list of all user wallets.
 
-#### Get Transactions for a Wallet
+**Response Example**:
+  ```json
+  {
+    "data": [
+      {
+        "serial": "030309237765",
+        "name": "EUR 2",
+        "amount": "332.13",
+        "availableAmount": "301.14",
+        "heldAmount": "30.99",
+        "currency": "EUR",
+        "isActive": true,
+        "isCard": false
+      }
+    ],
+    "status": "OK",
+    "date": "2023-11-23T12:57:07.543246287Z"
+  }
+  ```
+
+### Get Transactions for a Wallet
+
+#### Endpoint Details
+
 - **Path**: `/tma/v1/wallets/{serial}/transactions`
 - **Method**: GET
 - **Description**: Retrieves transactions for a specific wallet, identified by its serial.
+
+#### Path Parameters
+
+##### `{serial}`
+- **Type:** string
+- **Description:** The unique serial number of the wallet for which transactions are being retrieved. This parameter is part of the URL path.
+
+**Response Example**:
+  ```json
+  {
+  "data": {
+    "content": [
+      {
+        "id": "3140a8b9-86b5-44d2-a407-9ba7041092f0",
+        "type": "Outgoing SEPA",
+        "createdAt": "2023-11-23T12:45:00.213Z",
+        "updatedAt": "2023-11-23T12:44:59.988Z",
+        "status": "pending",
+        "direction": "OUT",
+        "amount": "100.00",
+        "commission": "11.00",
+        "currency": "EUR",
+        "description": "Outgoing transfer to EPAM",
+        "walletSerial": "252959811664",
+        "payerData": {
+          "country": "CY",
+          "city": "Larnaca",
+          "isBusiness": "false",
+          "beneficiaryName": "EPAM",
+          "iban": "CY89375238572039523454",
+          "postalCode": "3035",
+          "street1": "Sefery 7",
+          "paymentDetails": "test details",
+          "bic": "MMMMMM32455"
+        }
+      },
+      {
+        "id": "0b54c786-986b-4d96-8bb8-30400a764bb0",
+        "type": "Self transfer",
+        "createdAt": "2023-11-23T12:04:59.055Z",
+        "updatedAt": "2023-11-23T12:04:58.941Z",
+        "status": "processed",
+        "direction": "OUT",
+        "amount": "10.00",
+        "commission": "0.00",
+        "currency": "EUR",
+        "description": "Outgoing transfer to wallet 315912227851",
+        "fromWalletSerial": "252959811664",
+        "toWalletSerial": "315912227851"
+      }
+    ],
+    "pageable": {
+      "pageNumber": 0,
+      "pageSize": 25,
+      "sort": [],
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "last": false,
+    "totalPages": 2,
+    "totalElements": 33,
+    "size": 25,
+    "number": 0,
+    "sort": [],
+    "first": true,
+    "numberOfElements": 25,
+    "empty": false
+  },
+  "status": "OK",
+  "date": "2023-11-23T13:03:01.322347793Z"
+}
+  ```
+
+##### `data`
+- **Type:** object
+- **Description:** Contains detailed information about the transactions of the specified wallet.
+  - **Fields:**
+    - `totalPages`: Total number of pages of transaction data.
+    - `totalElements`: Total number of transaction elements.
+    - `size`: Number of transactions per page.
+    - `content`: List of transactions, each with its own set of details.
+      - **Type:** object
+      - **Description:** Detailed information about the transfer.
+        - `id`: Unique identifier for the transfer.
+        - `type`: Type of the transfer, such as "Self transfer".
+        - `createdAt`: Timestamp of when the transfer was created.
+        - `updatedAt`: Timestamp of the last update to the transfer.
+        - `status`: Status of the transfer, such as "processed".
+        - `direction`: Direction of the transfer, such as "IN" or "OUT".
+        - `amount`: Amount of the transfer.
+        - `commission`: Commission amount for the transfer.
+        - `currency`: Currency of the transfer, such as "EUR".
+        - `description`: Description of the transfer.
+        - `walletSerial`: Source wallet serial number.
+        - `fromWalletSerial`: Source wallet serial number.
+        - `toWalletSerial`: Destination wallet serial number.
+        - `payerData`: Payer information as provided in the request.
+        
+##### `status`
+- **Type:** string
+- **Description:** Status of the response, e.g., "OK".
+
+##### `date`
+- **Type:** string
+- **Description:** Timestamp of the response in ISO 8601 format.
 
 ### Pagination Support
 Endpoints returning multiple resources support pagination. Clients should use the pageable JSON parameter to specify pagination options.
