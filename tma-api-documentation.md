@@ -81,6 +81,11 @@ This API enables clients to manage and track their transfers and transaction his
     - `createdAt`: Timestamp of when the transfer was created.
     - `updatedAt`: Timestamp of the last update to the transfer.
     - `status`: Status of the transfer, such as "processed".
+      - For IN (incoming) transactions:
+        - `Pending` -> `Processed`, `Reverted`, `Declined`
+      - For OUT (outgoing) transactions:
+        - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
+        - `Limited` -> `Rejected`
     - `direction`: Direction of the transfer, such as "IN" or "OUT".
     - `amount`: Amount of the transfer.
     - `commission`: Commission amount for the transfer.
@@ -218,8 +223,7 @@ This API enables clients to manage and track their transfers and transaction his
   ```
 #### `status`
 - **Type:** string
-- **Description:** Status of the request (e.g., "success").
-
+- **Description:** Status of the request (e.g., "OK").
 #### `date`
 - **Type:** string
 - **Description:** Date and time of the response.
@@ -230,6 +234,11 @@ This API enables clients to manage and track their transfers and transaction his
     - `id`: Unique identifier for the transfer.
     - `type`: Type of the transfer ("external").
     - `status`: Status of the transfer, such as "completed".
+      - For IN (incoming) transactions:
+        - `Pending` -> `Processed`, `Reverted`, `Declined`
+      - For OUT (outgoing) transactions:
+        - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
+        - `Limited` -> `Rejected`
     - `createdAt`: Timestamp of when the transfer was created.
     - `direction`: Direction of the transfer (e.g., "outgoing").
     - `amount`: Amount of the transfer.
@@ -452,7 +461,7 @@ This API enables clients to manage and track their transfers and transaction his
 
 #### `status`
 - **Type:** string
-- **Description:** Status of the calculation (e.g., "success").
+- **Description:** Status of the calculation (e.g., "OK").
 
 #### `date`
 - **Type:** string
@@ -589,6 +598,11 @@ This API enables clients to manage and track their transfers and transaction his
         - `createdAt`: Timestamp of when the transfer was created.
         - `updatedAt`: Timestamp of the last update to the transfer.
         - `status`: Status of the transfer, such as "processed".
+          - For IN (incoming) transactions:
+            - `Pending` -> `Processed`, `Reverted`, `Declined`
+          - For OUT (outgoing) transactions:
+            - `Pending` -> `Cancelled` -> `Processed`, `Error`, `Declined`
+            - `Limited` -> `Rejected`
         - `direction`: Direction of the transfer, such as "IN" or "OUT".
         - `amount`: Amount of the transfer.
         - `commission`: Commission amount for the transfer.
