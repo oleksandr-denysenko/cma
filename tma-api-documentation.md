@@ -253,6 +253,14 @@ This API enables clients to manage and track their transfers and transaction his
 }
 ```
 
+#### `walletSerial`
+- **Type:** string
+- **Description:** Serial number of the wallet initiating the transfer.
+
+#### `transferType`
+- **Type:** string
+- **Description:** Type of the transfer, e.g., "SEPA"
+
 **Response Example**:
   ```json
   {
@@ -382,6 +390,28 @@ This API enables clients to manage and track their transfers and transaction his
       "date": "2023-11-23T12:00:37.658799348Z"
 }
   ```
+##### `data`
+- **Type:** array of objects
+- **Description:** Contains the field definitions for payer data.
+
+  ######
+  - `name`
+    - **Type:** string
+    - **Description:** Name of the field.
+  - `optional`
+    - **Type:** boolean
+    - **Description:** Indicates if the field is optional.
+  - `constraints`
+    - **Type:** array of objects
+    - **Description:** Validation constraints for the field.
+
+##### `status`
+- **Type:** string
+- **Description:** Status of the response, e.g., "OK".
+
+##### `date`
+- **Type:** string
+- **Description:** Timestamp of the response in ISO 8601 format.
 
 #### Calculate External Transfer
 - **Path**: `/tma/v1/transfer/external/calculate`
