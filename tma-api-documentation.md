@@ -175,7 +175,7 @@ This API enables clients to manage and track their transfers and transaction his
 
 #### `transferType`
 - **Type:** string
-- **Description:** Type of the transfer, e.g., "international."
+- **Description:** Type of the transfer, e.g., "SEPA"
 
 #### `amount`
 - **Type:** string
