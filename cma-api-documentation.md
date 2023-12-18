@@ -3,6 +3,12 @@
 ## Overview
 The Card Management API allows clients to interact with card-related services, including webhooks for card events, managing card details, transactions, security information, and balances. It's designed to offer a comprehensive suite of functionalities for digital banking platforms that need to integrate card management features.
 
+### API Request Authorization
+- **Requirement**: Include the `X-API-ID` and `X-API-KEY` in the HTTP header for each API call.
+    - `X-API-ID`: The user's API ID, provided after onboarding.
+    - `X-API-KEY`: The user's API Key, provided after onboarding.
+- **Invalid Access**: If the provided `X-API-ID` or `X-API-KEY` is incorrect, the system denies the request.
+
 ## Endpoints
 
 ### 1. Webhooks
