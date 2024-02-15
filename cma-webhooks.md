@@ -5,8 +5,19 @@ Webhooks in the Card Management API play a critical role in the external authori
 
 ## Setting Up Webhooks
 To effectively use webhooks with the Card Management API, follow these steps:
-1. **Configure the Webhook URL**: Configure the Webhook URL: Utilize the endpoint **/cma/v1/webhooks** to specify the URL where you want the webhook notifications to be delivered.
+1. **Configure the Webhook URL**: Configure the Webhook URL: Utilize the endpoint **/cma/v1/webhooks** to specify the URL and type where you want the webhook notifications to be delivered.
 2. **Receive Notifications**: Once configured, the API will send HTTP POST requests with JSON payloads to your specified URL whenever the subscribed events occur.
+
+# Authorization Webhook
+
+Request payload:
+
+```json
+{
+  "webhookUrl": "https://example.com/webhook",
+  "type": "AUTHORIZATION"
+}
+```
 
 ## Webhook Payload Structure
 
