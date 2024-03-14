@@ -10,6 +10,24 @@ This API enables clients to manage and track their transfers and transaction his
     - `X-API-KEY`: The user's API Key, provided after onboarding.
 - **Invalid Access**: If the provided `X-API-ID` or `X-API-KEY` is incorrect, the system denies the request.
 
+### Duplicate Transfer Prevention with Idempotency Keys
+In response to addressing duplicate transfer incidents, we have enhanced our API with the capability to use Idempotency Keys. This feature is designed to prevent duplicate transactions effectively when a unique `X-Idempotency-Key` is included in the header of your transfer requests.
+
+#### Using Idempotency Keys:
+- **Requirement**: For each transfer request, include a unique `X-Idempotency-Key` in the HTTP header.
+- **Purpose**: The unique key ensures that in the event of network issues where a response from a transfer request fails to reach you, the transaction is still securely logged. Resending the request with the same idempotency key will prompt our system to recognize it and prevent a duplicate transfer by returning the outcome of the original request instead of processing a new one.
+- **Action Required**: Incorporate the `X-Idempotency-Key` in all your transfer requests to avoid duplicate transactions.
+
+
+To generate an Idempotency Key, you'll typically want to create a unique value for each transaction request. This ensures that even if the request is accidentally sent multiple times, the server will recognize it as a single operation, preventing duplicate processing. Here's how you can approach generating an Idempotency Key:
+
+#### Generating an Idempotency Key
+UUID (Universally Unique Identifier)
+One of the most common methods is to use a UUID for the Idempotency Key. UUIDs are 128-bit numbers used to identify information in computer systems. Because of their unique nature, they're ideal for our purposes.
+
+#### Example of using an Idempotency Key in a transfer request header:
+```X-Idempotency-Key: 123e4567-e89b-12d3-a456-426614174000```
+
 ## Endpoints
 
 ### 1. Internal Transfers
