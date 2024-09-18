@@ -1,5 +1,4 @@
-
-# Webhook Registration and Update for Partner API
+# Webhooks
 
 ## Overview
 This section explains how partners can register, update, enable, and disable webhooks using the **Partner API**. Webhooks allow the partner to receive real-time notifications when certain events, such as application status changes, occur.
