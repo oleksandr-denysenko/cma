@@ -1,32 +1,57 @@
 # Partner Onboarding Flow
 
 1. **Create Personal Application**:
-    - The client starts by sending a `POST` request to `/onboarding/v1/partner/applications/personal` to create a new personal application.
-    - The onboarding system processes the request and responds with an application ID.
+   - The client sends a `POST` request to `/onboarding/v1/partner/applications/personal` to create a new personal application.
+   - The application status is set to **ONBOARDING**.
 
 2. **Upload Documents**:
-    - The client uploads necessary documents (e.g., proof of identity) using `POST /onboarding/v1/partner/applications/personal/{id}/documents`.
-    - The onboarding system acknowledges the document upload and stores them for verification.
+   - The client uploads required documents using `POST /onboarding/v1/partner/applications/personal/{id}/documents`.
+   - The application remains in the **ONBOARDING** status until submission. This means the status stays **ONBOARDING** until all the required documents are uploaded, and the application is submitted.
 
 3. **Optional: Update Personal Application**:
-    - Before submitting the application, the client has the option to update the personal application details using `PUT /onboarding/v1/partner/applications/personal/{id}`.
-    - The onboarding system processes the update and returns a success message.
+   - The client can update the personal application (if not submitted yet) using `PUT /onboarding/v1/partner/applications/personal/{id}`.
+   - The application remains in the **ONBOARDING** status.
 
-4. **Submit Personal Application**:
-    - Once all necessary details and documents are provided, the client submits the application using `POST /onboarding/v1/partner/applications/personal/{id}/submit`.
-    - The onboarding system marks the application as submitted and begins the verification process.
+4. **Submit Application for Review**:
+   - After uploading all documents and completing all required fields, the client submits the application using `POST /onboarding/v1/partner/applications/personal/{id}/submit`.
+   - The application status changes to **NON_VERIFIED** — the application is complete but not yet reviewed by the compliance team.
 
-5. **Optional: Register Webhook**:
-    - The client can optionally register a webhook using `POST /onboarding/v1/partner/webhooks` to receive updates on the application status.
-    - The webhook system acknowledges the registration and will send updates as needed.
+5. **Compliance Review**:
+   - The application may either stay in the **NON_VERIFIED** status while being reviewed by the compliance team, or it may optionally transition to **IN_PROGRESS** (used by Compliance to track ongoing reviews). The **IN_PROGRESS** status is not required, and Compliance can directly transition the application to **VERIFIED** without marking it as **IN_PROGRESS**.
 
-6. **Check Application Status**:
-    - The client can periodically check the status of the application by sending a `GET` request to `/onboarding/v1/partner/applications/personal/{id}`.
-    - The onboarding system responds with the current application status (e.g., verifying, approved, declined).
+6. **Final Status (VERIFIED or DECLINED)**:
+   - If the compliance team approves the application, it transitions to **VERIFIED**.
+   - If the application fails compliance, it transitions to **DECLINED**.
 
-7. **Optional: Webhook Updates**:
-    - If a webhook was registered, the webhook system sends status updates to the client whenever there is a change in the application's progress.
+7. **Webhook Notification**:
+   - Upon transitioning to **VERIFIED** or **DECLINED**, a registered Webhook is triggered to notify the client.
+   - If the application is **VERIFIED**, the Webhook payload includes wallet information (`walletId` and `currencyCode`).
+   - If **DECLINED**, the Webhook contains the status but no wallet information.
 
+### Webhook Payload:
 
+When the application is **VERIFIED**:
+```json
+{
+  "id": "60b8d295f1d3c72d9c1e5a5e",
+  "partnerId": "507f1f77bcf86cd799439011",
+  "applicationId": "abcdef1234567890abcdef12",
+  "status": "VERIFIED",
+  "wallet": {
+    "id": "543245545452",
+    "currencyCode": "EUR"
+  }
+}
+```
+
+When the application is **DECLINED**:
+```json
+{
+  "id": "60b8d295f1d3c72d9c1e5a5e",
+  "partnerId": "507f1f77bcf86cd799439011",
+  "applicationId": "abcdef1234567890abcdef12",
+  "status": "DECLINED"
+}
+```
 
 ![img.png](../img/img.png)
