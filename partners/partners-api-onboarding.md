@@ -70,4 +70,7 @@ When the application is **DECLINED**:
    - If the application is **DECLINED**, this field will be absent because no wallet is created.
 
 
+
+**UML Diagram**
+
 ![img.png](../img/img.png)
