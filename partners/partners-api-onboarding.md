@@ -53,5 +53,21 @@ When the application is **DECLINED**:
   "status": "DECLINED"
 }
 ```
+- **id**:
+   - The unique identifier for the Webhook notification. This represents the specific event that triggered the Webhook.
+
+- **partnerId**:
+   - The ID of the partner (the company). The partner is the entity responsible for registering new customers using the API. Each partner is a business or organization using this onboarding system.
+
+- **applicationId**:
+   - The ID of the personal application being submitted. This represents the form or application of the new customer who is being registered by the partner.
+
+- **status**:
+   - The current status of the application. It can be either **VERIFIED** (approved by Compliance) or **DECLINED** (rejected by Compliance).
+
+- **wallet**:
+   - If the application is **VERIFIED**, this field contains the information about the wallet created for the new customer. The `wallet.id` is the identifier of the wallet, and `currencyCode` specifies the currency (e.g., USD).
+   - If the application is **DECLINED**, this field will be absent because no wallet is created.
+
 
 ![img.png](../img/img.png)
