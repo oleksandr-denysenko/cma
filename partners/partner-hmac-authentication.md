@@ -60,6 +60,9 @@ function createPersonalApplication($apiToken, $secretKey) {
             'lastName' => 'Customer',
             'nationalityIso3' => 'FIN',
             'dateOfBirth' => '1990-11-19',
+            "occupation" => "Engineer",
+            "annualTurnover" => "ZERO_TO_1000",
+            "fundsSource" => "WINNINGS",
             'residentialAddress' => [
                 'countryIso3' => 'CYP',
                 'postalCode' => '3035',
