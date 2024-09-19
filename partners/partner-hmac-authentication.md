@@ -107,34 +107,25 @@ This example demonstrates how to upload a document using a **multipart request**
 function uploadDocument($apiToken, $secretKey, $applicantId, $filePath) {
     $timestamp = time();
     $path = "/onboarding/v1/partner/applications/personal/$applicantId/documents";
-
-    // Metadata for the document
-    $metadata = json_encode([
-        'documentType' => 'PASSPORT'
+    
+    // Query parameters for the document upload
+    $queryParams = http_build_query([
+        'type' => 'PASSPORT',
+        'side' => 'FRONT',
+        'issuingCountryIso3' => 'CYP'
     ]);
+
+    $fullUrl = "https://v3.amaiz.com$path?$queryParams";
 
     $fileData = file_get_contents($filePath);
     $fileName = basename($filePath);
 
     // Create a multipart body
-    $body = "--boundary
-" .
-            "Content-Disposition: form-data; name="metadata"
-
-" .
-            $metadata . "
-" .
-            "--boundary
-" .
-            "Content-Disposition: form-data; name="file"; filename="$fileName"
-" .
-            "Content-Type: application/octet-stream
-
-" .
-            $fileData . "
-" .
-            "--boundary--
-";
+    $body = "--boundary\r\n" .
+            "Content-Disposition: form-data; name=\"file\"; filename=\"$fileName\"\r\n" .
+            "Content-Type: application/octet-stream\r\n\r\n" .
+            $fileData . "\r\n" .
+            "--boundary--\r\n";
 
     // Generate signature
     $signature = createHMACSignature($secretKey, $timestamp, 'POST', $path, $body);
@@ -146,7 +137,7 @@ function uploadDocument($apiToken, $secretKey, $applicantId, $filePath) {
         'Content-Type: multipart/form-data; boundary=boundary'
     ];
 
-    $ch = curl_init("https://v3.amaiz.com$path");
+    $ch = curl_init($fullUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
