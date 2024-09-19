@@ -113,12 +113,15 @@ function uploadDocument($apiToken, $secretKey, $applicantId, $filePath) {
     
     // Query parameters for the document upload
     $queryParams = http_build_query([
-        'type' => 'PASSPORT',
+        'type' => 'ID_CARD',
         'side' => 'FRONT',
         'issuingCountryIso3' => 'CYP'
     ]);
+    
+    // Combine path and query parameters for signature
+    $fullPathWithQuery = "$path?$queryParams";
 
-    $fullUrl = "https://v3.amaiz.com$path?$queryParams";
+    $fullUrl = "https://v3.amaiz.com$fullPathWithQuery";
 
     $fileData = file_get_contents($filePath);
     $fileName = basename($filePath);
@@ -131,7 +134,7 @@ function uploadDocument($apiToken, $secretKey, $applicantId, $filePath) {
             "--boundary--\r\n";
 
     // Generate signature
-    $signature = createHMACSignature($secretKey, $timestamp, 'POST', $path, $body);
+    $signature = createHMACSignature($secretKey, $timestamp, 'POST', $fullPathWithQuery, $body);
 
     $headers = [
         "X-Api-Token: $apiToken",
